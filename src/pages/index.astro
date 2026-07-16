@@ -3,6 +3,14 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import StrataRule from '../components/StrataRule.astro';
+import { getCollection } from 'astro:content';
+
+const newsPosts = (await getCollection('news')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+const latest = newsPosts[0];
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
 const layers = [
   {
@@ -76,10 +84,8 @@ const dotColor = {
 
   <main>
     <!-- Hero -->
-    <section class="mx-auto max-w-5xl px-6 pt-20 pb-16 sm:pt-28">
-      <img src="/logo-notxt.png" alt="" width="56" height="56" class="mb-7" aria-hidden="true" />
-      <p class="font-mono text-xs uppercase tracking-[0.2em] text-ochre-deep">Server runtime // Vintage Story</p>
-      <h1 class="mt-4 font-display text-6xl font-bold tracking-tight text-ink sm:text-7xl">Stratum</h1>
+    <section class="mx-auto max-w-5xl px-6 pt-20 pb-16 sm:pt-24">
+      <h1 class="font-display text-6xl font-bold tracking-tight text-ink sm:text-7xl">Stratum</h1>
       <p class="mt-5 max-w-2xl text-xl text-ink">
         A patched server runtime for real Vintage Story multiplayer load.
       </p>
@@ -114,15 +120,30 @@ const dotColor = {
       </div>
     </section>
 
-    <!-- Screenshot plate -->
-    <section class="mx-auto max-w-5xl px-6 pb-20">
-      <figure class="border-4 border-bedrock bg-bedrock">
-        <img src="/stratum-hero.png" alt="A Vintage Story world" class="block w-full" />
-        <figcaption class="px-4 py-2.5 font-mono text-xs text-parchment-line">
-          Vintage Story multiplayer, running on Stratum.
-        </figcaption>
-      </figure>
-    </section>
+    <!-- Latest news -->
+    {latest && (
+      <section class="mx-auto max-w-5xl px-6 pb-20">
+        <div class="mb-5 flex items-baseline justify-between">
+          <p class="font-mono text-xs uppercase tracking-[0.2em] text-ink-faint">Latest news</p>
+          <a href="/news" class="text-sm text-ore-deep transition-colors hover:text-ore">All news &rarr;</a>
+        </div>
+        <a href={`/news/${latest.id}`} class="group block border-4 border-bedrock bg-bedrock">
+          {latest.data.image && (
+            <img src={latest.data.image} alt="" class="block h-48 w-full object-cover sm:h-56" />
+          )}
+          <div class="flex flex-col gap-3 px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h3 class="font-display text-lg font-bold text-parchment-light transition-colors group-hover:text-white">{latest.data.title}</h3>
+              <p class="mt-0.5 font-mono text-xs text-parchment-line">{fmtDate(latest.data.date)}</p>
+            </div>
+            <div class="flex shrink-0 items-center gap-2">
+              <img src={`https://github.com/${latest.data.authorGithub}.png?size=48`} alt="" width="24" height="24" class="rounded-full" />
+              <span class="text-xs text-parchment-line">{latest.data.author}</span>
+            </div>
+          </div>
+        </a>
+      </section>
+    )}
 
     <StrataRule />
 
