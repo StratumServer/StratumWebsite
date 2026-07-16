@@ -10,7 +10,7 @@ const newsPosts = (await getCollection('news')).sort(
 );
 const latest = newsPosts[0];
 const fmtDate = (d: Date) =>
-  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 
 const layers = [
   {

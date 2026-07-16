@@ -9,7 +9,7 @@ const posts = (await getCollection('news')).sort(
 );
 
 const fmt = (d: Date) =>
-  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 ---
 
 <Base title="News" description="Updates and release notes from the Stratum project.">
