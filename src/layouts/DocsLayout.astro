@@ -1,0 +1,56 @@
+---
+import Base from './Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import DocsSidebar from '../components/DocsSidebar.astro';
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  currentId?: string;
+  headings?: Heading[];
+}
+
+const { title, description, currentId, headings = [] } = Astro.props;
+const toc = headings.filter(h => h.depth >= 2 && h.depth <= 3);
+---
+
+<Base title={title} description={description}>
+  <Nav />
+
+  <div class="mx-auto grid max-w-6xl gap-10 px-6 py-12 lg:grid-cols-[15rem_1fr] xl:grid-cols-[15rem_1fr_12rem]">
+    <aside class="lg:sticky lg:top-20 lg:self-start">
+      <DocsSidebar currentId={currentId} />
+    </aside>
+
+    <main class="min-w-0">
+      <slot />
+    </main>
+
+    {toc.length > 0 && (
+      <aside class="hidden xl:sticky xl:top-20 xl:block xl:self-start">
+        <p class="mb-3 font-mono text-xs font-semibold uppercase tracking-widest text-ink-faint">On this page</p>
+        <ul class="space-y-1.5 border-l border-parchment-line">
+          {toc.map(h => (
+            <li>
+              <a
+                href={`#${h.slug}`}
+                class={`block border-l-2 border-transparent -ml-px py-0.5 text-sm text-ink-soft transition-colors hover:text-ink ${h.depth === 3 ? 'pl-6' : 'pl-3'}`}
+              >
+                {h.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
+  </div>
+
+  <Footer />
+</Base>

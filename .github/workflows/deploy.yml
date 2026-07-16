@@ -3,6 +3,12 @@ name: Deploy
 on:
   push:
     branches: [main]
+  # Manual "Run workflow" button.
+  workflow_dispatch:
+  # Fired by the StratumDocs repo when its docs change, so the site rebuilds and
+  # picks up the latest Markdown. See the sender workflow in StratumDocs.
+  repository_dispatch:
+    types: [docs-updated]
 
 jobs:
   deploy:

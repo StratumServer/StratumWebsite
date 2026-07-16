@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { githubDocsLoader } from './loaders/github-docs';
 
 // News posts. Drop a Markdown file in src/content/news/ and it shows up on the
 // News page and, if it is the newest, on the home page. Put header images in
@@ -16,4 +17,19 @@ const news = defineCollection({
   }),
 });
 
-export const collections = { news };
+// Docs are pulled from the StratumDocs repo at build time. Each Markdown file
+// becomes a page under /docs. Folder names become sidebar groups unless a page
+// sets `category`. Ordering is controlled by `order` (page) and `categoryOrder`
+// (group). A file named index.md is the /docs landing page.
+const docs = defineCollection({
+  loader: githubDocsLoader({ owner: 'StratumServer', repo: 'StratumDocs', branch: 'main' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    order: z.number().default(100),
+    category: z.string().optional(),
+    categoryOrder: z.number().optional(),
+  }),
+});
+
+export const collections = { news, docs };

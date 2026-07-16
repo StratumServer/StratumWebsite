@@ -1,0 +1,57 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import StrataRule from '../../components/StrataRule.astro';
+import { render } from 'astro:content';
+import { getDocs, getIndexDoc, buildSidebar } from '../../lib/docs';
+
+const docs = await getDocs();
+const indexDoc = getIndexDoc(docs);
+const groups = buildSidebar(docs);
+
+let Content: any = null;
+let headings: { depth: number; slug: string; text: string }[] = [];
+if (indexDoc) {
+  const rendered = await render(indexDoc);
+  Content = rendered.Content;
+  headings = rendered.headings;
+}
+---
+
+<DocsLayout title="Docs" description="Documentation for running a Stratum server." currentId="index" headings={headings}>
+  {indexDoc ? (
+    <article class="prose max-w-none">
+      <Content />
+    </article>
+  ) : (
+    <div>
+      <p class="font-mono text-xs uppercase tracking-[0.2em] text-ochre-deep">Documentation</p>
+      <h1 class="mt-3 font-display text-4xl font-bold text-ink">Stratum docs</h1>
+      {groups.length === 0 ? (
+        <p class="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          The docs are being written. They live in the
+          <a href="https://github.com/StratumServer/StratumDocs" target="_blank" rel="noopener noreferrer" class="text-ore-deep underline decoration-parchment-line underline-offset-2 transition-colors hover:text-ore">StratumDocs</a>
+          repository and show up here automatically once pages are added.
+        </p>
+      ) : (
+        <>
+          <p class="mt-4 max-w-2xl leading-relaxed text-ink-soft">Everything you need to install, configure, and run a Stratum server.</p>
+          <StrataRule class="mt-8" />
+          <div class="mt-8 grid gap-px border border-parchment-line bg-parchment-line sm:grid-cols-2">
+            {groups.map(group => (
+              <div class="bg-parchment-panel p-6">
+                <p class="font-mono text-xs font-semibold uppercase tracking-widest text-ink-faint">{group.category}</p>
+                <ul class="mt-3 space-y-2">
+                  {group.items.map(item => (
+                    <li>
+                      <a href={`/docs/${item.id}`} class="text-sm text-ore-deep underline decoration-parchment-line underline-offset-2 transition-colors hover:text-ore">{item.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  )}
+</DocsLayout>

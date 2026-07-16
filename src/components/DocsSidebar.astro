@@ -1,0 +1,33 @@
+---
+import { getDocs, buildSidebar } from '../lib/docs';
+
+interface Props {
+  currentId?: string;
+}
+
+const { currentId } = Astro.props;
+const groups = buildSidebar(await getDocs());
+
+const linkClass = (active: boolean) =>
+  active
+    ? 'block border-l-2 border-ochre -ml-px pl-3 py-1 text-sm font-medium text-ink'
+    : 'block border-l-2 border-transparent -ml-px pl-3 py-1 text-sm text-ink-soft transition-colors hover:text-ink hover:border-parchment-line';
+---
+
+<details class="docs-nav group" open>
+  <summary class="mb-2 flex cursor-pointer items-center justify-between border border-parchment-line bg-parchment-panel px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-ink-soft lg:hidden">
+    Documentation
+    <span class="transition-transform group-open:rotate-90">&rsaquo;</span>
+  </summary>
+  <nav class="docs-nav-list border-l border-parchment-line">
+    <a href="/docs" class={linkClass(currentId === 'index' || currentId === undefined)}>Overview</a>
+    {groups.map(group => (
+      <div class="mt-5">
+        <p class="mb-1.5 pl-3 font-mono text-xs font-semibold uppercase tracking-widest text-ink-faint">{group.category}</p>
+        {group.items.map(item => (
+          <a href={`/docs/${item.id}`} class={linkClass(currentId === item.id)}>{item.title}</a>
+        ))}
+      </div>
+    ))}
+  </nav>
+</details>
