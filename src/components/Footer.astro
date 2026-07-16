@@ -1,4 +1,6 @@
 ---
+import StrataRule from './StrataRule.astro';
+
 declare const __GIT_SHA__: string;
 declare const __GIT_SHORT_SHA__: string;
 
@@ -7,38 +9,41 @@ const sha = __GIT_SHA__;
 const shortSha = __GIT_SHORT_SHA__;
 ---
 
-<footer class="mt-auto border-t border-stone-800">
-  <div class="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-8 sm:flex-row sm:items-center sm:justify-between">
-    <div class="flex items-center gap-2 text-sm text-stone-500">
-      <span>&copy; {year} Stratum contributors. MIT License.</span>
-      {shortSha && (
-        <span class="text-stone-600">·</span>
-        <span class="font-mono text-xs">
-          <a
-            href="https://github.com/trevorftp/StratumWebsite"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-stone-400 hover:text-stone-200 transition-colors"
-          >
-            trevorftp/StratumWebsite
-          </a>
-          {' @ '}
-          <a
-            href={`https://github.com/trevorftp/StratumWebsite/commit/${sha}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-stone-400 hover:text-stone-200 transition-colors"
-          >
-            {shortSha}
-          </a>
-        </span>
-      )}
-    </div>
-    <div class="flex gap-5">
-      <a href="https://github.com/trevorftp/Stratum" target="_blank" rel="noopener noreferrer" class="text-sm text-stone-500 hover:text-stone-300 transition-colors">GitHub</a>
-      <a href="https://discord.gg/pd24fawhsD" target="_blank" rel="noopener noreferrer" class="text-sm text-stone-500 hover:text-stone-300 transition-colors">Discord</a>
-      <a href="https://ko-fi.com/imtsubaki" target="_blank" rel="noopener noreferrer" class="text-sm text-stone-500 hover:text-stone-300 transition-colors">Ko-fi</a>
-      <a href="https://mods.vintagestory.at/stratum" target="_blank" rel="noopener noreferrer" class="text-sm text-stone-500 hover:text-stone-300 transition-colors">Mod Page</a>
+<footer class="mt-auto">
+  <StrataRule />
+  <div class="bg-parchment-sunk">
+    <div class="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-8 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex flex-wrap items-center gap-2 text-sm text-ink-soft">
+        <span>&copy; {year} Stratum contributors. MIT License.</span>
+        {shortSha && (
+          <span class="text-parchment-line">·</span>
+          <span class="font-mono text-xs">
+            <a
+              href="https://github.com/StratumServer/StratumWebsite"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-ink-soft transition-colors hover:text-ink"
+            >
+              StratumServer/StratumWebsite
+            </a>
+            {' @ '}
+            <a
+              href={`https://github.com/StratumServer/StratumWebsite/commit/${sha}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-ink-soft transition-colors hover:text-ink"
+            >
+              {shortSha}
+            </a>
+          </span>
+        )}
+      </div>
+      <div class="flex flex-wrap gap-5">
+        <a href="https://github.com/StratumServer/Stratum" target="_blank" rel="noopener noreferrer" class="text-sm text-ink-soft transition-colors hover:text-ink">GitHub</a>
+        <a href="https://discord.gg/pd24fawhsD" target="_blank" rel="noopener noreferrer" class="text-sm text-ink-soft transition-colors hover:text-ink">Discord</a>
+        <a href="https://opencollective.com/stratum" target="_blank" rel="noopener noreferrer" class="text-sm text-ink-soft transition-colors hover:text-ink">Open Collective</a>
+        <a href="https://mods.vintagestory.at/stratum" target="_blank" rel="noopener noreferrer" class="text-sm text-ink-soft transition-colors hover:text-ink">Mod Page</a>
+      </div>
     </div>
   </div>
 </footer>

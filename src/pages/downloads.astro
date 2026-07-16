@@ -2,23 +2,34 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+
+const flags = [
+  { flag: '--stratum-version', effect: 'Print version info and exit' },
+  { flag: '--stratum-help', effect: 'Print launcher options and exit' },
+  { flag: '--stratum-refresh', effect: 'Re-download and re-extract the vanilla assets' },
+  { flag: '--stratum-skip-bootstrap', effect: 'Skip the first-run download' },
+  { flag: '--stratum-no-banner', effect: 'Suppress the startup banner' },
+];
 ---
 
 <Base title="Downloads" description="Download Stratum for your Vintage Story server.">
   <Nav />
 
   <main class="mx-auto max-w-5xl px-6 py-20">
-    <h1 class="mb-3 text-3xl font-bold text-stone-100">Downloads</h1>
-    <p class="mb-10 text-stone-400">
-      Releases are tagged <code class="rounded bg-stone-800 px-1.5 py-0.5 font-mono text-xs text-stone-300">v&lt;vs-version&gt;-stratum.&lt;rev&gt;</code>.
-      Use the release that matches your Vintage Story server version.
+    <p class="font-mono text-xs uppercase tracking-[0.2em] text-ochre-deep">Downloads</p>
+    <h1 class="mt-3 font-display text-4xl font-bold text-ink">Get Stratum</h1>
+    <p class="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+      Releases are tagged
+      <code class="bg-parchment-sunk px-1.5 py-0.5 font-mono text-xs text-bedrock">v&lt;vs-version&gt;-stratum.&lt;rev&gt;</code>.
+      The <span class="text-ink">vs-version</span> half is the Vintage Story release the build is patched against.
+      Use the one that matches your server.
     </p>
 
     <a
-      href="https://github.com/trevorftp/Stratum/releases/latest"
+      href="https://github.com/StratumServer/Stratum/releases/latest"
       target="_blank"
       rel="noopener noreferrer"
-      class="mb-14 inline-flex items-center gap-2 rounded-md bg-amber-500 px-6 py-3 font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+      class="mt-8 inline-flex items-center gap-2 bg-bedrock px-6 py-3 text-sm font-semibold text-parchment-light transition-colors hover:bg-ink"
     >
       Latest release on GitHub
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -27,75 +38,68 @@ import Footer from '../components/Footer.astro';
     </a>
 
     <!-- Platform instructions -->
-    <div class="grid gap-5 sm:grid-cols-2">
-      <div class="rounded-xl border border-stone-800 bg-stone-900 p-6">
-        <h2 class="mb-3 font-semibold text-stone-100">Windows</h2>
-        <p class="mb-4 text-sm text-stone-400">
-          Download <code class="rounded bg-stone-800 px-1.5 py-0.5 font-mono text-xs text-stone-300">stratum-*-win-x64.zip</code> and extract it.
+    <div class="mt-14 grid gap-px border border-parchment-line bg-parchment-line sm:grid-cols-2">
+      <div class="border-t-4 border-t-moss bg-parchment-panel p-6">
+        <p class="font-mono text-xs uppercase tracking-widest text-moss-deep">Windows</p>
+        <p class="mt-3 mb-4 text-sm leading-relaxed text-ink-soft">
+          Download <code class="bg-parchment-sunk px-1.5 py-0.5 font-mono text-xs text-bedrock">stratum-*-win-x64.zip</code>, extract it, and run:
         </p>
-        <div class="rounded-lg bg-stone-800 px-4 py-2.5 font-mono text-xs text-stone-300">
+        <div class="border-l-2 border-moss bg-bedrock px-4 py-2.5 font-mono text-xs text-parchment-light">
           StratumServer.exe
         </div>
       </div>
-      <div class="rounded-xl border border-stone-800 bg-stone-900 p-6">
-        <h2 class="mb-3 font-semibold text-stone-100">Linux</h2>
-        <p class="mb-4 text-sm text-stone-400">
-          Download <code class="rounded bg-stone-800 px-1.5 py-0.5 font-mono text-xs text-stone-300">stratum-*-linux-x64.zip</code> and extract it.
+      <div class="border-t-4 border-t-ochre bg-parchment-panel p-6">
+        <p class="font-mono text-xs uppercase tracking-widest text-ochre-deep">Linux</p>
+        <p class="mt-3 mb-4 text-sm leading-relaxed text-ink-soft">
+          Download <code class="bg-parchment-sunk px-1.5 py-0.5 font-mono text-xs text-bedrock">stratum-*-linux-x64.zip</code>, extract it, and run:
         </p>
-        <div class="rounded-lg bg-stone-800 px-4 py-2.5 font-mono text-xs text-stone-300">
-          dotnet StratumServer.dll
+        <div class="border-l-2 border-ochre bg-bedrock px-4 py-2.5 font-mono text-xs text-parchment-light">
+          ./StratumServer
         </div>
       </div>
     </div>
 
     <!-- Notes -->
-    <div class="mt-6 space-y-4">
-      <div class="rounded-xl border border-stone-800 bg-stone-900/40 p-6">
-        <h2 class="mb-2 font-semibold text-stone-100">First launch</h2>
-        <p class="text-sm text-stone-400">
-          On first launch, Stratum downloads and unpacks the matching vanilla server build. After that it runs the patched Stratum runtime. Your existing server data folder works as-is.
+    <div class="mt-6 grid gap-6 sm:grid-cols-3">
+      <div class="border border-parchment-line bg-parchment-panel p-6">
+        <h2 class="mb-2 font-display text-lg font-bold text-ink">Runtime</h2>
+        <p class="text-sm leading-relaxed text-ink-soft">
+          The launcher is framework-dependent, so the host needs the .NET 10 runtime installed. Nothing else to set up.
         </p>
       </div>
-      <div class="rounded-xl border border-stone-800 bg-stone-900/40 p-6">
-        <h2 class="mb-2 font-semibold text-stone-100">Compatibility</h2>
-        <p class="text-sm text-stone-400">
-          Use the Stratum release that matches your Vintage Story server version. Most normal server mods work, but Stratum patches deeper server internals than a regular mod. Test your mod list before moving a live server over.
+      <div class="border border-parchment-line bg-parchment-panel p-6">
+        <h2 class="mb-2 font-display text-lg font-bold text-ink">First launch</h2>
+        <p class="text-sm leading-relaxed text-ink-soft">
+          On first run Stratum downloads and unpacks the matching vanilla server build, then runs the patched runtime on top. Your existing data folder works as-is.
+        </p>
+      </div>
+      <div class="border border-parchment-line bg-parchment-panel p-6">
+        <h2 class="mb-2 font-display text-lg font-bold text-ink">Compatibility</h2>
+        <p class="text-sm leading-relaxed text-ink-soft">
+          Match the release to your Vintage Story version. Most server mods work, but Stratum patches deeper internals than a mod, so test your list first.
         </p>
       </div>
     </div>
 
     <!-- Flags -->
-    <div class="mt-6 rounded-xl border border-stone-800 bg-stone-900/40 p-6">
-      <h2 class="mb-4 font-semibold text-stone-100">Launcher flags</h2>
-      <div class="overflow-auto">
+    <div class="mt-6 border border-parchment-line bg-parchment-panel p-6">
+      <h2 class="mb-1 font-display text-lg font-bold text-ink">Launcher flags</h2>
+      <p class="mb-5 text-sm text-ink-soft">Anything not listed here is passed straight through to the server, like <code class="bg-parchment-sunk px-1.5 py-0.5 font-mono text-xs text-bedrock">--port</code> or <code class="bg-parchment-sunk px-1.5 py-0.5 font-mono text-xs text-bedrock">--dataPath</code>.</p>
+      <div class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead>
-            <tr class="border-b border-stone-700">
-              <th class="pb-2.5 text-left font-medium text-stone-300">Flag</th>
-              <th class="pb-2.5 text-left font-medium text-stone-300">Effect</th>
+            <tr class="border-b border-parchment-line">
+              <th class="pb-2.5 text-left font-mono text-xs font-semibold uppercase tracking-widest text-ink-faint">Flag</th>
+              <th class="pb-2.5 text-left font-mono text-xs font-semibold uppercase tracking-widest text-ink-faint">Effect</th>
             </tr>
           </thead>
-          <tbody class="text-stone-400">
-            <tr class="border-b border-stone-800/60">
-              <td class="py-2.5 pr-8 font-mono text-xs text-stone-300 whitespace-nowrap">--stratum-version</td>
-              <td class="py-2.5">Print version info and exit</td>
-            </tr>
-            <tr class="border-b border-stone-800/60">
-              <td class="py-2.5 pr-8 font-mono text-xs text-stone-300 whitespace-nowrap">--stratum-help</td>
-              <td class="py-2.5">Print launcher options and exit</td>
-            </tr>
-            <tr class="border-b border-stone-800/60">
-              <td class="py-2.5 pr-8 font-mono text-xs text-stone-300 whitespace-nowrap">--stratum-refresh</td>
-              <td class="py-2.5">Re-download and re-extract vanilla assets</td>
-            </tr>
-            <tr class="border-b border-stone-800/60">
-              <td class="py-2.5 pr-8 font-mono text-xs text-stone-300 whitespace-nowrap">--stratum-skip-bootstrap</td>
-              <td class="py-2.5">Skip the first-run download</td>
-            </tr>
-            <tr>
-              <td class="py-2.5 pr-8 font-mono text-xs text-stone-300 whitespace-nowrap">--stratum-no-banner</td>
-              <td class="py-2.5">Suppress the startup banner</td>
-            </tr>
+          <tbody class="text-ink-soft">
+            {flags.map((row, i) => (
+              <tr class={i < flags.length - 1 ? 'border-b border-parchment-line-soft' : ''}>
+                <td class="py-2.5 pr-8 font-mono text-xs whitespace-nowrap text-bedrock">{row.flag}</td>
+                <td class="py-2.5">{row.effect}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

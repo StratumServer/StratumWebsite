@@ -1,0 +1,14 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div class={`w-full ${className}`} aria-hidden="true">
+  <div class="h-[3px] bg-moss"></div>
+  <div class="h-[3px] bg-ochre"></div>
+  <div class="h-[3px] bg-rock"></div>
+  <div class="h-[3px] bg-bedrock"></div>
+</div>

@@ -6,7 +6,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = 'Dedicated server software for Vintage Story.' } = Astro.props;
+const { title, description = 'Server runtime for Vintage Story.' } = Astro.props;
 const pageTitle = title === 'Home' ? 'Stratum' : `${title} - Stratum`;
 ---
 
@@ -16,10 +16,12 @@ const pageTitle = title === 'Home' ? 'Stratum' : `${title} - Stratum`;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#f1e7d1" />
     <title>{pageTitle}</title>
-    <link rel="icon" type="image/png" href="/logo-notxt.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" type="image/png" href="/logo-notxt.png" />
   </head>
-  <body class="bg-stone-950 text-stone-100 min-h-screen flex flex-col antialiased">
+  <body class="min-h-screen flex flex-col antialiased">
     <slot />
   </body>
 </html>

@@ -2,36 +2,104 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import StrataRule from '../components/StrataRule.astro';
+
+const layers = [
+  {
+    tag: 'Layer 01 // Performance',
+    color: 'moss',
+    title: 'Runs better under load',
+    items: [
+      'Chunk sending shared fairly between players',
+      'Chunk generation budgets and smoother chunk IO',
+      'Movement-aware chunk priority and stale request cleanup',
+      'Async pathfinding with priority for work near players',
+      'Entity, block tick, and autosave smoothing',
+      'Lower per-tick overhead and less allocation churn',
+    ],
+  },
+  {
+    tag: 'Layer 02 // Tools',
+    color: 'ochre',
+    title: 'Owner and staff tools built in',
+    items: [
+      'Homes, spawn, back, tpa, and private messages',
+      'Staff tools for vanish, freeze, jail, mute, warn, and notes',
+      'Player lookup with whois, seen, and near',
+      'Chat prefixes, nametag styling, and server info text',
+      'Permission based access for every command',
+    ],
+  },
+  {
+    tag: 'Layer 03 // Protection',
+    color: 'ore',
+    title: 'Guards against bad clients',
+    items: [
+      'Packet rate limits and queue back-pressure',
+      'Oversized custom packet rejection',
+      'Server-side block-break validation',
+      'Login protection during the join window',
+      'Optional client mod policy controls',
+      'Map and location privacy options for players',
+    ],
+  },
+];
+
+const goodFor = [
+  'Public multiplayer servers',
+  'Servers with busy spawn areas',
+  'Event and civ-style servers',
+  'PvP servers that want privacy and staff tools',
+  'Heavier modded servers that need better reports',
+  'Communities that want owner tools without a client mod',
+];
+
+const edgeColor = {
+  moss: 'border-t-moss',
+  ochre: 'border-t-ochre',
+  ore: 'border-t-ore',
+};
+const tagColor = {
+  moss: 'text-moss-deep',
+  ochre: 'text-ochre-deep',
+  ore: 'text-ore-deep',
+};
+const dotColor = {
+  moss: 'bg-moss',
+  ochre: 'bg-ochre',
+  ore: 'bg-ore',
+};
 ---
 
-<Base title="Home" description="Dedicated server software for Vintage Story.">
+<Base title="Home" description="Server runtime for Vintage Story dedicated servers.">
   <Nav />
 
   <main>
     <!-- Hero -->
-    <section class="relative flex min-h-[80vh] flex-col items-center justify-center px-6 text-center">
-      <img
-        src="/stratum-hero.png"
-        alt=""
-        class="absolute inset-0 h-full w-full object-cover opacity-20"
-        aria-hidden="true"
-      />
-      <div class="absolute inset-0 bg-gradient-to-b from-stone-950/60 via-stone-950/40 to-stone-950" aria-hidden="true"></div>
-      <div class="relative flex flex-col items-center text-center">
-        <img src="/logo-notxt.png" alt="" width="80" height="80" class="mb-6" aria-hidden="true" />
-        <h1 class="text-6xl font-bold tracking-tight text-stone-50 sm:text-8xl">Stratum</h1>
-        <p class="mt-5 text-xl text-stone-300">Dedicated server software for Vintage Story.</p>
-        <p class="mt-2 max-w-xl text-base text-stone-400">Stratum improves Vintage Story dedicated servers with performance tuning, built-in staff tools, and protection against common server abuse.</p>
-        <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+    <section class="mx-auto max-w-5xl px-6 pt-20 pb-16 sm:pt-28">
+      <img src="/logo-notxt.png" alt="" width="56" height="56" class="mb-7" aria-hidden="true" />
+      <p class="font-mono text-xs uppercase tracking-[0.2em] text-ochre-deep">Server runtime // Vintage Story</p>
+      <h1 class="mt-4 font-display text-6xl font-bold tracking-tight text-ink sm:text-7xl">Stratum</h1>
+      <p class="mt-5 max-w-2xl text-xl text-ink">
+        A patched server runtime for real Vintage Story multiplayer load.
+      </p>
+      <p class="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft">
+        Stratum runs in place of the stock dedicated server, with over 150 direct game-file patches across
+        networking, chunk pressure, entities, worldgen, anti-cheat, and per-tick overhead. Players connect
+        with a normal client. You run Stratum for the game version your server is on.
+      </p>
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
         <a
           href="/downloads"
-          class="rounded-md bg-amber-500 px-5 py-2.5 text-sm font-semibold text-stone-950 transition-colors hover:bg-amber-400"
+          class="inline-flex items-center justify-center bg-bedrock px-6 py-3 text-sm font-semibold text-parchment-light transition-colors hover:bg-ink"
         >
           Download
         </a>
         <a
-          href="/docs"
-          class="rounded-md border border-stone-700 px-5 py-2.5 text-sm font-semibold text-stone-100 transition-colors hover:border-stone-500 hover:bg-stone-900"
+          href="https://github.com/StratumServer/Stratum/wiki"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center border border-parchment-line bg-parchment-panel px-6 py-3 text-sm font-semibold text-ink transition-colors hover:border-ink-faint"
         >
           Documentation
         </a>
@@ -39,102 +107,141 @@ import Footer from '../components/Footer.astro';
           href="https://discord.gg/pd24fawhsD"
           target="_blank"
           rel="noopener noreferrer"
-          class="rounded-md border border-stone-700 px-5 py-2.5 text-sm font-semibold text-stone-400 transition-colors hover:border-stone-500 hover:text-stone-100"
+          class="inline-flex items-center justify-center px-2 py-3 text-sm font-semibold text-ore-deep transition-colors hover:text-ore"
         >
-          Discord
+          Join the Discord
         </a>
-        </div>
       </div>
     </section>
 
-    <!-- Features -->
-    <section class="mx-auto max-w-5xl px-6 py-24">
-      <h2 class="mb-12 text-center text-2xl font-bold text-stone-100">What's included</h2>
-      <div class="grid gap-6 sm:grid-cols-3">
-        <div class="rounded-xl border border-stone-800 bg-stone-900 p-6">
-          <h3 class="mb-4 font-semibold text-stone-100">Performance</h3>
-          <ul class="space-y-2 text-sm text-stone-400">
-            <li>Chunk loading distributed fairly across all players</li>
-            <li>Join handling stays stable when multiple players connect</li>
-            <li>Tick and IO work is budgeted to reduce lag spikes</li>
-            <li>Pathfinding and entity work prioritized near active players</li>
-          </ul>
-        </div>
-        <div class="rounded-xl border border-stone-800 bg-stone-900 p-6">
-          <h3 class="mb-4 font-semibold text-stone-100">Server Tools</h3>
-          <ul class="space-y-2 text-sm text-stone-400">
-            <li>Homes, TPA, warps, and messaging included</li>
-            <li>Staff tools: vanish, freeze, mute, jail, warn, and notes</li>
-            <li>Chat formatting, role prefixes, and nametag styling</li>
-            <li>Performance, packet, and violation reports</li>
-          </ul>
-        </div>
-        <div class="rounded-xl border border-stone-800 bg-stone-900 p-6">
-          <h3 class="mb-4 font-semibold text-stone-100">Protection</h3>
-          <ul class="space-y-2 text-sm text-stone-400">
-            <li>Packet limits and back-pressure prevent server flooding</li>
-            <li>Block-break validation catches suspicious client behavior</li>
-            <li>Login protection during the join window</li>
-            <li>Client mod policy controls</li>
-          </ul>
-        </div>
-      </div>
+    <!-- Screenshot plate -->
+    <section class="mx-auto max-w-5xl px-6 pb-20">
+      <figure class="border-4 border-bedrock bg-bedrock">
+        <img src="/stratum-hero.png" alt="A Vintage Story world" class="block w-full" />
+        <figcaption class="px-4 py-2.5 font-mono text-xs text-parchment-line">
+          Vintage Story multiplayer, running on Stratum.
+        </figcaption>
+      </figure>
     </section>
 
-    <!-- Install -->
-    <section class="border-y border-stone-800 bg-stone-900/30 px-6 py-24">
-      <div class="mx-auto max-w-2xl">
-        <h2 class="mb-12 text-center text-2xl font-bold text-stone-100">Get started</h2>
-        <ol class="space-y-8">
+    <StrataRule />
+
+    <!-- What's included -->
+    <section class="mx-auto max-w-5xl px-6 py-20">
+      <p class="font-mono text-xs uppercase tracking-[0.2em] text-ink-faint">What Stratum adds</p>
+      <h2 class="mt-3 max-w-2xl font-display text-3xl font-bold text-ink">
+        One runtime instead of a stack of mods and scripts
+      </h2>
+      <div class="mt-12 grid gap-px border border-parchment-line bg-parchment-line sm:grid-cols-3">
+        {layers.map(layer => (
+          <div class={`border-t-4 ${edgeColor[layer.color]} bg-parchment-panel p-6`}>
+            <p class={`font-mono text-xs uppercase tracking-widest ${tagColor[layer.color]}`}>{layer.tag}</p>
+            <h3 class="mt-3 mb-5 font-display text-lg font-bold text-ink">{layer.title}</h3>
+            <ul class="space-y-2.5 text-sm leading-relaxed text-ink-soft">
+              {layer.items.map(item => (
+                <li class="flex gap-2.5">
+                  <span class={`mt-2 h-1 w-1 shrink-0 ${dotColor[layer.color]}`}></span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <p class="mt-8 max-w-2xl text-sm leading-relaxed text-ink-soft">
+        When a server starts to lag, the built-in reports give you somewhere real to look. Check timings,
+        packets, queues, chunks, entities, players, and violations from in-game with the
+        <code class="bg-parchment-sunk px-1.5 py-0.5 font-mono text-xs text-bedrock">/stratum</code> commands.
+      </p>
+    </section>
+
+    <StrataRule />
+
+    <!-- Get started -->
+    <section class="bg-parchment-sunk/60">
+      <div class="mx-auto max-w-2xl px-6 py-20">
+        <p class="font-mono text-xs uppercase tracking-[0.2em] text-ink-faint">Get started</p>
+        <h2 class="mt-3 font-display text-3xl font-bold text-ink">Three steps to a running server</h2>
+        <ol class="mt-12 space-y-9">
           <li class="flex gap-5">
-            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-sm font-semibold text-amber-500">1</span>
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center border border-parchment-line bg-parchment-panel font-mono text-sm font-semibold text-ochre-deep">1</span>
             <div>
-              <p class="font-medium text-stone-100">Download the latest release</p>
-              <p class="mt-1.5 text-sm text-stone-400">
-                Get the <code class="rounded bg-stone-800 px-1.5 py-0.5 font-mono text-xs text-stone-300">stratum-&lt;version&gt;-&lt;rid&gt;.zip</code> for your
-                platform from the <a href="https://github.com/trevorftp/Stratum/releases" target="_blank" rel="noopener noreferrer" class="text-amber-500 hover:text-amber-400 transition-colors">releases page</a>.
+              <p class="font-semibold text-ink">Download the release for your game version</p>
+              <p class="mt-1.5 text-sm leading-relaxed text-ink-soft">
+                Grab the <code class="bg-parchment-sunk px-1.5 py-0.5 font-mono text-xs text-bedrock">stratum-&lt;version&gt;-&lt;rid&gt;.zip</code>
+                for your platform from the
+                <a href="https://github.com/StratumServer/Stratum/releases" target="_blank" rel="noopener noreferrer" class="text-ore-deep underline decoration-parchment-line underline-offset-2 transition-colors hover:text-ore">releases page</a>.
+                Match the release to the Vintage Story version your server runs.
               </p>
             </div>
           </li>
           <li class="flex gap-5">
-            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-sm font-semibold text-amber-500">2</span>
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center border border-parchment-line bg-parchment-panel font-mono text-sm font-semibold text-ochre-deep">2</span>
             <div>
-              <p class="font-medium text-stone-100">Extract the archive</p>
-              <p class="mt-1.5 text-sm text-stone-400">Extract it to the directory you want to run the server from.</p>
+              <p class="font-semibold text-ink">Extract it</p>
+              <p class="mt-1.5 text-sm leading-relaxed text-ink-soft">Unpack the archive wherever you want the server to live.</p>
             </div>
           </li>
           <li class="flex gap-5">
-            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-sm font-semibold text-amber-500">3</span>
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center border border-parchment-line bg-parchment-panel font-mono text-sm font-semibold text-ochre-deep">3</span>
             <div>
-              <p class="font-medium text-stone-100">Run the server</p>
-              <div class="mt-2.5 space-y-2">
-                <div class="rounded-lg bg-stone-800 px-4 py-2.5 font-mono text-xs text-stone-300">
-                  <span class="text-stone-500"># Windows</span><br />
+              <p class="font-semibold text-ink">Run it</p>
+              <div class="mt-3 space-y-2">
+                <div class="border-l-2 border-moss bg-bedrock px-4 py-2.5 font-mono text-xs text-parchment-light">
+                  <span class="text-parchment-line"># Windows</span><br />
                   StratumServer.exe
                 </div>
-                <div class="rounded-lg bg-stone-800 px-4 py-2.5 font-mono text-xs text-stone-300">
-                  <span class="text-stone-500"># Linux</span><br />
-                  dotnet StratumServer.dll
+                <div class="border-l-2 border-ochre bg-bedrock px-4 py-2.5 font-mono text-xs text-parchment-light">
+                  <span class="text-parchment-line"># Linux</span><br />
+                  ./StratumServer
                 </div>
               </div>
-              <p class="mt-2 text-sm text-stone-400">First launch downloads the matching vanilla server build.</p>
+              <p class="mt-3 text-sm leading-relaxed text-ink-soft">
+                Needs the .NET 10 runtime on the host. On first launch Stratum downloads the matching vanilla
+                server files, then runs the patched runtime on top. Your existing world and data folder carry over.
+              </p>
             </div>
           </li>
         </ol>
       </div>
     </section>
 
-    <!-- Good for -->
-    <section class="mx-auto max-w-5xl px-6 py-24">
-      <h2 class="mb-10 text-center text-2xl font-bold text-stone-100">Good for</h2>
-      <ul class="mx-auto grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2 text-sm text-stone-400">
-        <li class="flex items-start gap-2"><span class="mt-0.5 text-amber-600">-</span> Public multiplayer servers</li>
-        <li class="flex items-start gap-2"><span class="mt-0.5 text-amber-600">-</span> Servers with busy spawn areas</li>
-        <li class="flex items-start gap-2"><span class="mt-0.5 text-amber-600">-</span> Event and civ-style servers</li>
-        <li class="flex items-start gap-2"><span class="mt-0.5 text-amber-600">-</span> PvP servers wanting privacy and staff tools</li>
-        <li class="flex items-start gap-2"><span class="mt-0.5 text-amber-600">-</span> Modded servers that need better reports</li>
-        <li class="flex items-start gap-2"><span class="mt-0.5 text-amber-600">-</span> Servers that want control without a client mod</li>
-      </ul>
+    <StrataRule />
+
+    <!-- Good for + compatibility -->
+    <section class="mx-auto max-w-5xl px-6 py-20">
+      <div class="grid gap-14 lg:grid-cols-2">
+        <div>
+          <p class="font-mono text-xs uppercase tracking-[0.2em] text-ink-faint">Good fit for</p>
+          <h2 class="mt-3 font-display text-3xl font-bold text-ink">Who runs Stratum</h2>
+          <ul class="mt-8 space-y-3 text-sm text-ink-soft">
+            {goodFor.map(item => (
+              <li class="flex items-start gap-3 border-b border-parchment-line-soft pb-3">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 bg-ochre"></span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p class="font-mono text-xs uppercase tracking-[0.2em] text-ink-faint">Before you switch</p>
+          <h2 class="mt-3 font-display text-3xl font-bold text-ink">Compatibility</h2>
+          <div class="mt-8 space-y-4 text-sm leading-relaxed text-ink-soft">
+            <p>
+              Stratum is built against a specific Vintage Story version, so use the release that matches your
+              server. Players do not install anything extra.
+            </p>
+            <p>
+              Most normal server mods work, but Stratum patches deeper server internals than a regular mod.
+              Test your mod list before you move a live server over.
+            </p>
+            <p class="border-l-2 border-ore bg-parchment-panel px-4 py-3 text-ink">
+              Stratum is not compatible with Synergy or Tungsten. Those optimizations are already built into
+              Stratum, so running them together conflicts.
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 

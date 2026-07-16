@@ -1,5 +1,49 @@
 @import "tailwindcss";
 
+@theme {
+  /* Parchment surfaces */
+  --color-parchment: #f1e7d1;
+  --color-parchment-light: #f8f1e0;
+  --color-parchment-panel: #fbf6ea;
+  --color-parchment-sunk: #ece0c5;
+  --color-parchment-line: #d8c8a4;
+  --color-parchment-line-soft: #e5d8b9;
+
+  /* Ink */
+  --color-ink: #241b12;
+  --color-ink-soft: #5a4d3b;
+  --color-ink-faint: #897a5e;
+
+  /* Strata layers, pulled from the logo */
+  --color-moss: #6f7539;
+  --color-moss-deep: #545a2a;
+  --color-ochre: #b1773a;
+  --color-ochre-deep: #895723;
+  --color-rock: #6f6a61;
+  --color-bedrock: #3a2b1c;
+  --color-ore: #2f6087;
+  --color-ore-deep: #23496a;
+
+  --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+}
+
 html {
   scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-parchment);
+  background-image: linear-gradient(
+    180deg,
+    var(--color-parchment-light) 0%,
+    var(--color-parchment) 40%
+  );
+  background-attachment: fixed;
+  color: var(--color-ink);
+}
+
+::selection {
+  background-color: var(--color-ochre);
+  color: var(--color-parchment-light);
 }
