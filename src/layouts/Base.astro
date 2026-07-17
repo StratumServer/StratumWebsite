@@ -20,6 +20,25 @@ const pageTitle = title === 'Home' ? 'Stratum' : `${title} - Stratum`;
     <title>{pageTitle}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" type="image/png" href="/logo-notxt.png" />
+    <script is:inline>
+      // Runs before first paint so the page never flashes the wrong theme.
+      (() => {
+        let stored;
+        try {
+          stored = localStorage.getItem('theme');
+        } catch {}
+        const theme =
+          stored === 'dark' || stored === 'light'
+            ? stored
+            : matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+        document.documentElement.dataset.theme = theme;
+        document
+          .querySelector('meta[name="theme-color"]')
+          .setAttribute('content', theme === 'dark' ? '#201a13' : '#f1e7d1');
+      })();
+    </script>
   </head>
   <body class="min-h-screen flex flex-col antialiased">
     <slot />

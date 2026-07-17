@@ -12,7 +12,7 @@
   /* Ink */
   --color-ink: #241b12;
   --color-ink-soft: #5a4d3b;
-  --color-ink-faint: #897a5e;
+  --color-ink-faint: #73654d;
 
   /* Strata layers, pulled from the logo */
   --color-moss: #6f7539;
@@ -30,6 +30,33 @@
 
 html {
   scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+/* Dark theme: same strata palette, inverted surfaces. Every text/background
+   pair below holds WCAG AA (>= 4.5:1); see the dark-theme PR for the audit. */
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-parchment: #201a13;
+  --color-parchment-light: #f3ead8;
+  --color-parchment-panel: #292217;
+  --color-parchment-sunk: #191410;
+  --color-parchment-line: #453a2c;
+  --color-parchment-line-soft: #362d22;
+
+  --color-ink: #ece3d0;
+  --color-ink-soft: #c9bba1;
+  --color-ink-faint: #a3937a;
+
+  --color-moss: #838b46;
+  --color-moss-deep: #b9c273;
+  --color-ochre: #c08040;
+  --color-ochre-deep: #e2a870;
+  --color-rock: #8d867b;
+  --color-bedrock: #332a1e;
+  --color-ore: #6f9ec7;
+  --color-ore-deep: #92b7d8;
 }
 
 body {
@@ -44,8 +71,41 @@ body {
 }
 
 ::selection {
-  background-color: var(--color-ochre);
+  background-color: var(--color-ochre-deep);
   color: var(--color-parchment-light);
+}
+
+[data-theme='dark'] ::selection {
+  background-color: var(--color-ochre);
+  color: #1a140e;
+}
+
+/* A few utilities pull double duty in the light theme: parchment-line is both
+   a border on parchment and muted text on bedrock, bedrock is both a dark
+   surface and code-text on parchment-sunk, and buttons hover to bg-ink.
+   Inverting the variables breaks those three pairings, so they get explicit
+   dark values here instead of markup changes on every call site. */
+[data-theme='dark'] body {
+  background-image: linear-gradient(
+    180deg,
+    #261f16 0%,
+    var(--color-parchment) 40%
+  );
+}
+[data-theme='dark'] .text-parchment-line {
+  color: #b3a689;
+}
+[data-theme='dark'] .text-bedrock {
+  color: #dfcfa8;
+}
+[data-theme='dark'] .hover\:bg-ink:hover {
+  background-color: #4a3e2f;
+}
+[data-theme='dark'] .prose code {
+  color: #dfcfa8;
+}
+[data-theme='dark'] .prose a {
+  text-decoration-color: #6b5c46;
 }
 
 /* Docs sidebar: it is a <details> so it collapses on mobile, but on desktop the
