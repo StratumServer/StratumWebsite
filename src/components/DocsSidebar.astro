@@ -19,7 +19,7 @@ const linkClass = (active: boolean) =>
     Documentation
     <span class="transition-transform group-open:rotate-90">&rsaquo;</span>
   </summary>
-  <nav class="docs-nav-list border-l border-parchment-line">
+  <nav aria-label="Documentation" class="docs-nav-list border-l border-parchment-line">
     <a href="/docs" class={linkClass(currentId === 'index' || currentId === undefined)}>Overview</a>
     {groups.map(group => (
       <div class="mt-5">
