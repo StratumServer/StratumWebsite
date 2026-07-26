@@ -3,7 +3,7 @@ title: 'Stratum 1.22.5-stratum.1 is out'
 date: 2026-07-26
 author: 'Trevor'
 authorGithub: 'trevorftp'
-image: '/news/welcome.png'
+image: '/news/image2.jpg'
 summary: 'The first stable Stratum release for Vintage Story 1.22.5, with a new chunk-generation pipeline, networking fixes, lighting work, and everything tested through the v16 indev builds.'
 ---
 
