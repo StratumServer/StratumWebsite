@@ -5,6 +5,12 @@ const links = [
   { href: '/docs', label: 'Docs', external: false },
   { href: '/contribute', label: 'Contribute', external: false },
   { href: '/team', label: 'Team', external: false },
+  {
+    href: 'https://nimbus.stratumvs.dev',
+    label: 'Nimbus',
+    external: true,
+    project: true,
+  },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -22,9 +28,34 @@ const currentPath = Astro.url.pathname;
           href={link.href}
           target={link.external ? '_blank' : undefined}
           rel={link.external ? 'noopener noreferrer' : undefined}
-          class={`text-sm transition-colors ${!link.external && currentPath.startsWith(link.href) ? 'font-medium text-ink' : 'text-ink-soft hover:text-ink'}`}
+          class:list={[
+            'group flex items-center gap-1 text-sm transition-colors',
+            link.project
+              ? 'border-l border-parchment-line pl-4 font-medium text-ochre-deep hover:text-ink'
+              : !link.external && currentPath.startsWith(link.href)
+                ? 'font-medium text-ink'
+                : 'text-ink-soft hover:text-ink',
+          ]}
         >
           {link.label}
+        
+          {link.external && (
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              class="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            >
+              <path d="M7 17 17 7" />
+              <path d="M7 7h10v10" />
+            </svg>
+          )}
         </a>
       ))}
       <button
