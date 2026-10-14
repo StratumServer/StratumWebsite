@@ -21,9 +21,29 @@ jobs:
           node-version: '24'
           cache: 'npm'
 
+      # Fetch the docs with a plain HTTPS clone. This does not use the GitHub REST
+      # API, so it needs no token and is not subject to the API rate limit.
+      - name: Clone StratumDocs
+        run: git clone --depth 1 https://github.com/StratumServer/StratumDocs.git docs-src
+
+      # The docs loader returns zero pages without failing when the folder is empty,
+      # which would deploy a site with no documentation. Stop here instead.
+      # Raise MIN_DOCS_PAGES when the docs grow; never lower it to make a build pass.
+      - name: Check the docs were loaded
+        run: |
+          MIN_DOCS_PAGES=8
+          count=$(find docs-src -name '*.md' -not -path '*/.git/*' | wc -l)
+          echo "StratumDocs pages found: $count (minimum $MIN_DOCS_PAGES)"
+          if [ "$count" -lt "$MIN_DOCS_PAGES" ]; then
+            echo "Too few docs pages. Refusing to deploy." >&2
+            exit 1
+          fi
+
       - run: npm install
 
       - run: npm run build
+        env:
+          DOCS_LOCAL_DIR: ${{ github.workspace }}/docs-src
 
       - uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
