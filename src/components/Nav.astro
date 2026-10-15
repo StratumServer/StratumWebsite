@@ -17,12 +17,12 @@ const currentPath = Astro.url.pathname;
 ---
 
 <header class="sticky top-0 z-50 border-b border-parchment-line bg-parchment/85 backdrop-blur-sm">
-  <nav aria-label="Main" class="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
+  <nav aria-label="Main" class="mx-auto flex h-14 w-full max-w-[1600px] items-center justify-between px-4 sm:px-6 2xl:px-8">
     <a href="/" class="flex items-center gap-2.5 transition-opacity hover:opacity-70">
       <img src="/logo-notxt.png" alt="Stratum" width="26" height="26" />
       <span class="text-sm font-semibold tracking-tight text-ink">Stratum</span>
     </a>
-    <div class="flex items-center gap-6">
+    <div class="hidden items-center gap-6 lg:flex">
       {links.map(link => (
         <a
           href={link.href}
@@ -61,6 +61,7 @@ const currentPath = Astro.url.pathname;
       <button
         type="button"
         id="theme-toggle"
+        data-theme-toggle
         aria-label="Dark theme"
         aria-pressed="false"
         class="cursor-pointer text-ink-faint transition-colors hover:text-ink"
@@ -85,6 +86,54 @@ const currentPath = Astro.url.pathname;
         </svg>
       </a>
     </div>
+
+    <details class="mobile-site-nav group relative lg:hidden">
+      <summary class="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded border border-parchment-line bg-parchment-panel px-3 font-mono text-xs font-semibold uppercase tracking-widest text-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ochre [&::-webkit-details-marker]:hidden">
+        Menu
+        <svg class="h-4 w-4 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path d="m5 7.5 5 5 5-5" />
+        </svg>
+      </summary>
+      <div class="absolute right-0 top-full z-[60] mt-2 flex w-64 flex-col gap-1 rounded border border-parchment-line bg-parchment-panel p-3 shadow-xl">
+        {links.map(link => (
+          <a
+            href={link.href}
+            target={link.external ? '_blank' : undefined}
+            rel={link.external ? 'noopener noreferrer' : undefined}
+            class:list={[
+              'flex min-h-11 items-center justify-between rounded px-3 text-sm transition-colors hover:bg-parchment-sunk hover:text-ink',
+              link.project
+                ? 'text-ochre-deep'
+                : !link.external && currentPath.startsWith(link.href)
+                  ? 'font-semibold text-ink'
+                  : 'text-ink-soft',
+            ]}
+          >
+            {link.label}
+            {link.external && <span aria-hidden="true">↗</span>}
+          </a>
+        ))}
+        <div class="my-1 border-t border-parchment-line" aria-hidden="true"></div>
+        <button
+          type="button"
+          data-theme-toggle
+          aria-label="Toggle theme"
+          aria-pressed="false"
+          class="flex min-h-11 items-center gap-3 rounded px-3 text-left text-sm text-ink-soft transition-colors hover:bg-parchment-sunk hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ochre"
+        >
+          <span>Toggle theme</span>
+        </button>
+        <a
+          href="https://github.com/StratumServer/Stratum"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub"
+          class="flex min-h-11 items-center gap-3 rounded px-3 text-sm text-ink-soft transition-colors hover:bg-parchment-sunk hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ochre"
+        >
+          GitHub
+        </a>
+      </div>
+    </details>
   </nav>
 </header>
 
@@ -101,12 +150,13 @@ const currentPath = Astro.url.pathname;
 </style>
 
 <script>
-  const toggle = document.getElementById('theme-toggle');
+  const toggles = document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]');
   const syncButton = () => {
-    toggle?.setAttribute('aria-pressed', String(document.documentElement.dataset.theme === 'dark'));
+    const pressed = String(document.documentElement.dataset.theme === 'dark');
+    toggles.forEach(toggle => toggle.setAttribute('aria-pressed', pressed));
   };
   syncButton();
-  toggle?.addEventListener('click', () => {
+  toggles.forEach(toggle => toggle.addEventListener('click', () => {
     const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
     document.documentElement.dataset.theme = next;
     try {
@@ -116,5 +166,5 @@ const currentPath = Astro.url.pathname;
       .querySelector('meta[name="theme-color"]')
       ?.setAttribute('content', next === 'dark' ? '#201a13' : '#f1e7d1');
     syncButton();
-  });
+  }));
 </script>
