@@ -31,8 +31,8 @@ jobs:
       # Raise MIN_DOCS_PAGES when the docs grow; never lower it to make a build pass.
       - name: Check the docs were loaded
         run: |
-          MIN_DOCS_PAGES=8
-          count=$(find docs-src -name '*.md' -not -path '*/.git/*' | wc -l)
+          MIN_DOCS_PAGES=20
+          count=$(find docs-src \( -iname '*.md' -o -iname '*.mdx' \) -not -path '*/.git/*' | wc -l)
           echo "StratumDocs pages found: $count (minimum $MIN_DOCS_PAGES)"
           if [ "$count" -lt "$MIN_DOCS_PAGES" ]; then
             echo "Too few docs pages. Refusing to deploy." >&2
