@@ -206,6 +206,11 @@ body {
 .docs-main > .prose > :is(p, ul, ol, blockquote, h2, h3) {
   max-width: 75ch;
 }
+@media (min-width: 1280px) {
+  .docs-main > .prose > :is(p, ul, ol, blockquote, h2, h3) {
+    max-width: none;
+  }
+}
 .docs-table-scroll {
   max-width: 100%;
   overflow-x: auto;
