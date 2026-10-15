@@ -108,14 +108,6 @@ body {
   text-decoration-color: #6b5c46;
 }
 
-/* Docs sidebar: it is a <details> so it collapses on mobile, but on desktop the
-   list should always show regardless of open state. */
-@media (min-width: 1024px) {
-  .docs-nav > .docs-nav-list {
-    display: block !important;
-  }
-}
-
 /* Rendered Markdown (news articles and docs) */
 .prose {
   color: var(--color-ink-soft);
