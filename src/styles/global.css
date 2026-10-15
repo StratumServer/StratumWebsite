@@ -207,3 +207,71 @@ body {
   border-top: 1px solid var(--color-parchment-line);
   margin: 2rem 0;
 }
+
+.docs-main > p.text-lg {
+  max-width: 75ch;
+}
+.docs-main > .prose > :is(p, ul, ol, blockquote, h2, h3) {
+  max-width: 75ch;
+}
+.docs-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  border: 1px solid var(--color-parchment-line);
+  border-radius: 0.5rem;
+  background-color: var(--color-parchment-panel);
+  margin: 1.5rem 0;
+  scrollbar-color: var(--color-ochre) var(--color-parchment-sunk);
+  scrollbar-width: thin;
+}
+.docs-table-scroll:focus-visible {
+  outline: 2px solid var(--color-ochre-deep);
+  outline-offset: 2px;
+}
+.docs-table-scroll table {
+  width: 100%;
+  min-width: 36rem;
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.925rem;
+  line-height: 1.55;
+}
+.docs-table-scroll thead {
+  background-color: var(--color-parchment-sunk);
+  color: var(--color-ink);
+}
+.docs-table-scroll th,
+.docs-table-scroll td {
+  padding: 0.75rem 0.875rem;
+  text-align: left;
+  vertical-align: top;
+}
+.docs-table-scroll th {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.docs-table-scroll tbody tr:nth-child(even) {
+  background-color: color-mix(in srgb, var(--color-parchment-sunk) 45%, transparent);
+}
+.docs-table-scroll tbody tr:hover {
+  background-color: var(--color-parchment-sunk);
+}
+.docs-table-scroll tbody tr:not(:last-child) td {
+  border-bottom: 1px solid var(--color-parchment-line-soft);
+}
+.docs-table-scroll td:first-child {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+.docs-table-scroll td code {
+  white-space: nowrap;
+}
+[data-theme='dark'] .docs-table-scroll tbody tr:nth-child(even) {
+  background-color: color-mix(in srgb, var(--color-parchment-light) 5%, transparent);
+}
+[data-theme='dark'] .docs-table-scroll tbody tr:hover {
+  background-color: #332a1e;
+}

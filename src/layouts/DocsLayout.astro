@@ -24,12 +24,12 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= 3);
 <Base title={title} description={description}>
   <Nav />
 
-  <div class="mx-auto grid max-w-6xl gap-10 px-6 py-12 lg:grid-cols-[15rem_1fr] xl:grid-cols-[15rem_1fr_12rem]">
+  <div class="mx-auto grid w-full max-w-[1600px] gap-8 px-4 py-8 sm:gap-10 sm:px-6 sm:py-12 lg:grid-cols-[15rem_minmax(0,1fr)] xl:grid-cols-[15rem_minmax(0,1fr)_14rem] 2xl:px-8">
     <aside aria-label="Documentation sidebar" class="lg:sticky lg:top-20 lg:self-start">
       <DocsSidebar currentId={currentId} />
     </aside>
 
-    <main class="min-w-0">
+    <main class="docs-main min-w-0">
       <slot />
     </main>
 
@@ -53,4 +53,42 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= 3);
   </div>
 
   <Footer />
+
+  <script>
+    document.querySelectorAll<HTMLElement>('.docs-main .prose table').forEach(table => {
+      const wrapper = document.createElement('div');
+      const headings = [...table.querySelectorAll('thead th')]
+        .map(heading => heading.textContent?.trim())
+        .filter(Boolean);
+
+      wrapper.className = 'docs-table-scroll';
+      wrapper.setAttribute('role', 'region');
+      wrapper.setAttribute(
+        'aria-label',
+        `Table: ${headings.join(', ') || 'Documentation table'}. Scroll horizontally to see every column.`,
+      );
+      table.before(wrapper);
+      wrapper.append(table);
+
+      const updateKeyboardAccess = () => {
+        if (wrapper.scrollWidth > wrapper.clientWidth + 1) {
+          wrapper.setAttribute('tabindex', '0');
+        } else {
+          wrapper.removeAttribute('tabindex');
+        }
+      };
+
+      updateKeyboardAccess();
+      window.addEventListener('resize', updateKeyboardAccess);
+      wrapper.addEventListener('keydown', event => {
+        if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+          event.preventDefault();
+          wrapper.scrollBy({ left: event.key === 'ArrowRight' ? 80 : -80 });
+        } else if (event.key === 'Home' || event.key === 'End') {
+          event.preventDefault();
+          wrapper.scrollTo({ left: event.key === 'End' ? wrapper.scrollWidth : 0 });
+        }
+      });
+    });
+  </script>
 </Base>
