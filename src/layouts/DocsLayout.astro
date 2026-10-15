@@ -24,7 +24,7 @@ const toc = headings.filter(h => h.depth >= 2 && h.depth <= 3);
 <Base title={title} description={description}>
   <Nav />
 
-  <div class="mx-auto grid w-full max-w-[1600px] gap-8 px-4 py-8 sm:gap-10 sm:px-6 sm:py-12 lg:grid-cols-[15rem_minmax(0,1fr)] xl:grid-cols-[15rem_minmax(0,75ch)_14rem] xl:justify-between 2xl:px-8">
+  <div class="mx-auto grid w-full max-w-[1600px] gap-8 px-4 py-8 sm:gap-10 sm:px-6 sm:py-12 lg:grid-cols-[15rem_minmax(0,1fr)] xl:grid-cols-[15rem_minmax(0,1fr)_14rem] 2xl:px-8">
     <aside aria-label="Documentation sidebar" class="lg:sticky lg:top-20 lg:self-start">
       <DocsSidebar currentId={currentId} />
     </aside>
