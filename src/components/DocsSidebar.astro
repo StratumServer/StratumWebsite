@@ -31,3 +31,14 @@ const linkClass = (active: boolean) =>
     ))}
   </nav>
 </details>
+
+<script>
+  const docsSidebar = document.querySelector<HTMLDetailsElement>('.docs-nav');
+  const desktopViewport = window.matchMedia('(min-width: 1024px)');
+  const syncDocsSidebar = () => {
+    if (docsSidebar) docsSidebar.open = desktopViewport.matches;
+  };
+
+  syncDocsSidebar();
+  desktopViewport.addEventListener('change', syncDocsSidebar);
+</script>
