@@ -1,4 +1,4 @@
-<img width="1140" height="807" alt="image" src="https://github.com/user-attachments/assets/686c0cbe-5f99-409a-b12f-19f225d0e5e7" />---
+---
 title: 'Stratum 1.22.7-stratum.3 is out'
 date: 2026-11-21
 author: 'Zaldaryon'
