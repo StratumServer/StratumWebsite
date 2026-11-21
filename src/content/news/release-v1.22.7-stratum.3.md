@@ -3,7 +3,7 @@ title: 'Stratum 1.22.7-stratum.3 is out'
 date: 2026-11-21
 author: 'Zaldaryon'
 authorGithub: 'Zaldaryon'
-image: '/news/welcome.png'
+image: '/news/cottage.png'
 summary: 'Privacy and reach fixes, group administration, class change requests, a pregen queue, falling block and dropped item limits, and a long list of network and worldgen fixes.'
 ---
 
